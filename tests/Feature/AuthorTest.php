@@ -45,9 +45,9 @@ class AuthorTest extends TestCase
     }
 
     /**
-     * Test asc order get authors.
+     * Test desc order get authors.
      */
-    public function testAscOrderGetAuthors(): void
+    public function testDescOrderGetAuthors(): void
     {
         $authors = Author::factory()->count(50)->create()->map(function ($author) {
             return [
