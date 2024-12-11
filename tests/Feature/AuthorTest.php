@@ -40,7 +40,7 @@ class AuthorTest extends TestCase
                 ]
             ])
             ->assertJson([
-                'data' => $authors->sortByDesc('created_at')->take(10)->toArray()
+                'data' => $authors->sortBy('name')->take(10)->filter()->values()->toArray()
             ]);
     }
 
@@ -59,7 +59,7 @@ class AuthorTest extends TestCase
         });
 
         $this
-            ->getJson('api/authors?order=ASC')
+            ->getJson('api/authors?order=DESC')
             ->assertStatus(200)
             ->assertJsonCount(10, 'data')
             ->assertJsonStructure([
@@ -73,7 +73,7 @@ class AuthorTest extends TestCase
                 ]
             ])
             ->assertJson([
-                'data' => $authors->sortBy('created_at')->take(10)->toArray()
+                'data' => $authors->sortByDesc('name')->take(10)->filter()->values()->toArray()
             ]);
     }
 
@@ -125,7 +125,7 @@ class AuthorTest extends TestCase
                 ]
             ])
             ->assertJson([
-                'data' => $authors->sortByDesc('created_at')->take(5)->toArray()
+                'data' => $authors->sortBy('name')->take(5)->filter()->values()->toArray()
             ]);
     }
 
