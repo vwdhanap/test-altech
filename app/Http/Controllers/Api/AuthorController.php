@@ -26,7 +26,7 @@ class AuthorController extends Controller
         IndexRequest $request
     ): AnonymousResourceCollection {
         $authors = Author::minimalAuthor()
-            ->orderBy('created_at', $request->input('order', 'DESC'))
+            ->orderBy('name', $request->input('order', 'ASC'))
             ->paginate($request->input('limit', 10));
 
         return AuthorResource::collection($authors);

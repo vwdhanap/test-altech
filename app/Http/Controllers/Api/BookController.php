@@ -26,7 +26,7 @@ class BookController extends Controller
         IndexRequest $request
     ): AnonymousResourceCollection {
         $books = Book::minimalBook()
-            ->orderBy('created_at', $request->input('order', 'DESC'))
+            ->orderBy('title', $request->input('order', 'ASC'))
             ->paginate($request->input('limit', 10));
 
         return BookResource::collection($books);
@@ -125,7 +125,7 @@ class BookController extends Controller
     ): AnonymousResourceCollection {
         $books = Book::where('author_id', $authorId)
             ->minimalBook()
-            ->orderBy('created_at', $request->input('order', 'DESC'))
+            ->orderBy('title', $request->input('order', 'ASC'))
             ->paginate($request->input('limit', 10));
 
         return BookResource::collection($books);
