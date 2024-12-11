@@ -8,7 +8,6 @@ use App\Http\Requests\Api\Author\ShowRequest;
 use App\Http\Requests\Api\Author\StoreRequest;
 use App\Http\Requests\Api\Author\UpdateRequest;
 use App\Http\Resources\AuthorResource;
-use App\Http\Resources\BookResource;
 use App\Models\Author;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
