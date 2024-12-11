@@ -27,8 +27,8 @@ class Author extends Model
         return $query->select('id', 'name', 'bio', 'birth_date');
     }
 
-    public function resolveRouteBinding($value, $field = null)
+    public function scopeAuthorBooks($query)
     {
-        return $this->minimalAuthor()->where($field ?? 'id', $value)->firstOrFail();
+        return $query->with('books:id,author_id,title,description,publish_date');
     }
 }
