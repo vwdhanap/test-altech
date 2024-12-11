@@ -10,5 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::resource('authors', AuthorController::class)->only('store', 'index', 'show', 'update', 'destroy');
-Route::get('authors/{authorId}/book', [AuthorController::class, 'getBooksByAuthorId']);
+Route::get('authors/{authorId}/book', [BookController::class, 'getBooksByAuthorId']);
 Route::resource('books', BookController::class)->only('store', 'index', 'show', 'update', 'destroy');

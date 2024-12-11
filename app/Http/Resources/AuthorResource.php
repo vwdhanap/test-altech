@@ -19,7 +19,6 @@ class AuthorResource extends JsonResource
             'name' => $this->name,
             'bio' => $this->bio,
             'birth_date' => $this->birth_date,
-            'books' => BookResource::collection($this->whenLoaded('books'))
         ];
     }
 }

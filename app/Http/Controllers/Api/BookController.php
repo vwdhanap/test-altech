@@ -111,4 +111,23 @@ class BookController extends Controller
             'message' => 'Book has been deleted successfully'
         ]);
     }
+
+    /**
+     * Get books by author id
+     * 
+     * @unauthenticated
+     * 
+     * @response BookResource
+     */
+    public function getBooksByAuthorId(
+        $authorId,
+        IndexRequest $request
+    ): AnonymousResourceCollection {
+        $books = Book::where('author_id', $authorId)
+            ->minimalBook()
+            ->orderBy('created_at', $request->input('order', 'DESC'))
+            ->paginate($request->input('limit', 10));
+
+        return BookResource::collection($books);
+    }
 }

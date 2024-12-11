@@ -111,32 +111,4 @@ class AuthorController extends Controller
             'message' => 'Author has been deleted successfully.'
         ]);
     }
-
-    /**
-     * Get books by author id
-     * 
-     * @unauthenticated
-     * 
-     * @response AuthorResource
-     */
-    public function getBooksByAuthorId(
-        $authorId,
-        ShowRequest $request
-    ): AuthorResource | JsonResponse {
-        $cacheKey = "author.{$authorId}.books";
-
-        $author = Cache::remember($cacheKey, $request->input('cache_duration', 3600), function () use ($authorId) {
-            return Author::minimalAuthor()
-                ->authorBooks()
-                ->find($authorId);
-        });
-
-        if (!$author) {
-            return response()->json([
-                'message' => 'The requested author was not found.'
-            ]);
-        }
-
-        return new AuthorResource($author);
-    }
 }
