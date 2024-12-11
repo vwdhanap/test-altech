@@ -52,7 +52,7 @@ class AuthorController extends Controller
         if (!$author) {
             return response()->json([
                 'message' => 'The requested author was not found.'
-            ]);
+            ], 404);
         }
 
         return new AuthorResource($author);
@@ -89,7 +89,7 @@ class AuthorController extends Controller
         if (!$author) {
             return response()->json([
                 'message' => 'The requested author was not found.'
-            ]);
+            ], 404);
         }
 
         $author->update($request->only('name', 'bio', 'birth_date'));
@@ -108,7 +108,7 @@ class AuthorController extends Controller
         Author::where('id', $authorId)->delete();
 
         return response()->json([
-            'message' => 'Author has been deleted successfully'
+            'message' => 'Author has been deleted successfully.'
         ]);
     }
 
