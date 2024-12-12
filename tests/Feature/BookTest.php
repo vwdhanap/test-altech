@@ -218,9 +218,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test show an book.
+     * Test show a book.
      */
-    public function testShowAnBook(): void
+    public function testShowABook(): void
     {
         $author = Author::factory()->create();
         $bookInitial = Book::factory()->create(['author_id' => $author->id]);
@@ -247,9 +247,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test show an book not found.
+     * Test show a book not found.
      */
-    public function testShowAnBookNotFound(): void
+    public function testShowABookNotFound(): void
     {
         $author = Author::factory()->create();
         Book::factory()->create(['author_id' => $author->id]);
@@ -266,9 +266,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test store an book.
+     * Test store a book.
      */
-    public function testStoreAnBook(): void
+    public function testStoreABook(): void
     {
         $author = Author::factory()->create();
         $book = Book::factory()->make(['author_id' => $author->id])->toArray();
@@ -293,9 +293,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test store an book unprocessable.
+     * Test store a book unprocessable.
      */
-    public function testStoreAnBookUnprocessable(): void
+    public function testStoreABookUnprocessable(): void
     {
         $author = Author::factory()->create();
         $book = Book::factory()
@@ -311,9 +311,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test update an book.
+     * Test update a book.
      */
-    public function testUpdateAnBook(): void
+    public function testUpdateABook(): void
     {
         $author = Author::factory()->create();
         $initialBook = Book::factory()->create(['author_id' => $author->id]);
@@ -344,9 +344,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test update an book unprocessable.
+     * Test update a book unprocessable.
      */
-    public function testUpdateAnBookUnprocessable(): void
+    public function testUpdateABookUnprocessable(): void
     {
         $author = Author::factory()->create();
         $initialBook = Book::factory()->create(['author_id' => $author->id]);
@@ -365,9 +365,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test update an book not found.
+     * Test update a book not found.
      */
-    public function testUpdateAnBookNotFound(): void
+    public function testUpdateABookNotFound(): void
     {
         $author = Author::factory()->create();
         Book::factory()->create(['author_id' => $author->id]);
@@ -385,9 +385,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test delete an book.
+     * Test delete a book.
      */
-    public function testDeleteAnBook(): void
+    public function testDeleteABook(): void
     {
         $author = Author::factory()->create();
         $book = Book::factory()->create(['author_id' => $author->id]);
@@ -404,5 +404,217 @@ class BookTest extends TestCase
             ]);
 
         $this->assertModelMissing($book);
+    }
+
+    /**
+     * Test get books by author id.
+     */
+    public function testGetBookByAuthorId(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        $books = Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book")
+            ->assertStatus(200)
+            ->assertJsonCount(10, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'author_id',
+                        'title',
+                        'description',
+                        'publish_date'
+                    ]
+                ]
+            ])
+            ->assertJson([
+                'data' => $books->sortBy('title')->take(10)->filter()->values()->toArray()
+            ]);
+    }
+
+    /**
+     * Test desc order get books by author id.
+     */
+    public function testDescGetBookByAuthorId(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        $books = Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?order=DESC")
+            ->assertStatus(200)
+            ->assertJsonCount(10, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'author_id',
+                        'title',
+                        'description',
+                        'publish_date'
+                    ]
+                ]
+            ])
+            ->assertJson([
+                'data' => $books->sortByDesc('title')->take(10)->filter()->values()->toArray()
+            ]);
+    }
+
+    /**
+     * Test  order get books by author id unprocessable.
+     */
+    public function testOrderGetBooksByAuthorIdUnprocessable(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?order=unprocessed")
+            ->assertStatus(422);
+    }
+
+    /**
+     * Test limit get books by author id.
+     */
+    public function testLimitGetBooksByAuthorId(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        $books = Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?limit=5")
+            ->assertStatus(200)
+            ->assertJsonCount(5, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'author_id',
+                        'title',
+                        'description',
+                        'publish_date'
+                    ]
+                ]
+            ])
+            ->assertJson([
+                'data' => $books->sortBy('title')->take(5)->filter()->values()->toArray()
+            ]);
+    }
+
+    /**
+     * Test limit get books by author id unprocessable.
+     */
+    public function testLimitGetBooksByAuthorIdUnprocessable(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?limit=unprocessed")
+            ->assertStatus(422);
+    }
+
+    /**
+     * Test page get books by author id.
+     */
+    public function testPageGetBooksByAuthorId(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?page=3")
+            ->assertStatus(200)
+            ->assertJsonCount(10, 'data')
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'author_id',
+                        'title',
+                        'description',
+                        'publish_date'
+                    ]
+                ]
+            ])
+            ->assertJsonPath('meta.current_page', 3);
+    }
+
+    /**
+     * Test page get books by author id unprocessable.
+     */
+    public function testPageGetBooksByAuthorIdUnprocessable(): void
+    {
+        $author = Author::factory()->create();
+        $authorId = $author->id;
+        Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
+            return [
+                'id' => $book->id,
+                'author_id' => $book->author_id,
+                'title' => $book->title,
+                'description' => $book->description,
+                'publish_date' => $book->publish_date
+            ];
+        });
+
+        $this
+            ->getJson("api/authors/$authorId/book?page=unprocessed")
+            ->assertStatus(422);
     }
 }

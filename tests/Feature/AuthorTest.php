@@ -78,9 +78,9 @@ class AuthorTest extends TestCase
     }
 
     /**
-     * Test asc order get authors unprocessable.
+     * Test order get authors unprocessable.
      */
-    public function testAscOrderGetAuthorsUnprocessable(): void
+    public function testOrderGetAuthorsUnprocessable(): void
     {
         Author::factory()->count(50)->create()->map(function ($author) {
             return [
