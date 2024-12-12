@@ -324,7 +324,8 @@ class AuthorTest extends TestCase
      */
     public function testUpdateAnAuthorUnprocessable(): void
     {
-        Author::factory()->create();
+        $author = Author::factory()->create();
+        $authorId = $author->id;
         $newData = Author::factory()
             ->make([
                 'name' => fake()->sentence(300)
@@ -332,7 +333,7 @@ class AuthorTest extends TestCase
             ->toArray();
 
         $this
-            ->putJson('api/authors/$authorId', $newData)
+            ->putJson("api/authors/$authorId", $newData)
             ->assertStatus(422);
     }
 

@@ -52,7 +52,7 @@ class BookController extends Controller
         if (!$book) {
             return response()->json([
                 'message' => 'The requested book was not found.'
-            ]);
+            ], 404);
         }
 
         return new BookResource($book);
@@ -89,7 +89,7 @@ class BookController extends Controller
         if (!$book) {
             return response()->json([
                 'message' => 'The requested book was not found.'
-            ]);
+            ], 404);
         }
 
         $book->update($request->only('author_id', 'title', 'description', 'publish_date'));
@@ -108,7 +108,7 @@ class BookController extends Controller
         Book::where('id', $bookId)->delete();
 
         return response()->json([
-            'message' => 'Book has been deleted successfully'
+            'message' => 'Book has been deleted successfully.'
         ]);
     }
 
