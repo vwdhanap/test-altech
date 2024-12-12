@@ -18,30 +18,36 @@ Ensure you have the following installed:
 
 ### **Installation Steps**
 
-1. Install dependencies using Composer:
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/vwdhanap/test-altech.git
+    ```
+
+2. Install dependencies using Composer:
 
     ```bash
     composer install
     ```
 
-2. Create a `.env` file:
+3. Create a `.env` file:
 
     ```bash
     cp .env.example .env
     ```
 
-3. Configure the `.env` file:
+4. Configure the `.env` file:
 
     - Set the database credentials (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`). If you are using SQLite then you are ready to go
     - Set `APP_URL` to the application URL (e.g., `http://localhost`).
 
-4. Generate the application key:
+5. Generate the application key:
 
     ```bash
     php artisan key:generate
     ```
 
-5. Run database migrations:
+6. Run database migrations:
 
     ```bash
     php artisan migrate
@@ -49,7 +55,7 @@ Ensure you have the following installed:
 
     If you see the screen to create an SQLite database, then chose yes
 
-6. Start the development server:
+7. Start the development server:
 
     ```bash
     php artisan serve
