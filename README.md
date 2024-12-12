@@ -14,7 +14,7 @@ Ensure you have the following installed:
 
 -   PHP (>= 8.0)
 -   Composer
--   A supported database (e.g., MySQL, PostgreSQL, SQLite)
+-   A supported database (SQLite)
 
 ### **Installation Steps**
 
