@@ -32,7 +32,7 @@ Ensure you have the following installed:
 
 3. Configure the `.env` file:
 
-    - Set the database credentials (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`).
+    - Set the database credentials (`DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`). If you are using SQLite then you are ready to go
     - Set `APP_URL` to the application URL (e.g., `http://localhost`).
 
 4. Generate the application key:
@@ -47,16 +47,12 @@ Ensure you have the following installed:
     php artisan migrate
     ```
 
+    If you see the screen to create an SQLite database, then chose yes
+
 6. Start the development server:
 
     ```bash
     php artisan serve
-    ```
-
-7. Start the database queue work:
-
-    ```bash
-    php artisan queue:work
     ```
 
     Access the application at [http://localhost:8000](http://localhost:8000).
