@@ -78,7 +78,26 @@ This project uses **Scramble Dedoc** to generate and serve API documentation. Us
 
 ---
 
-## **3. Running Unit Tests**
+## **3. Accessing Telescope**
+
+This project uses **Telescope** to detect any queries that are duplicated.
+
+### **Steps to Access the Telescope**
+
+1. Make sure the application is running (`php artisan serve && php artisan queue:work`).
+2. Visit the following URL in your browser:
+
+    ```
+    http://localhost:8000/telescope
+    ```
+
+    (Adjust the URL if your application runs on a different port or subdomain.)
+
+3. The telescope will display all the requests that sent to the endpoints.
+
+---
+
+## **4. Running Unit Tests**
 
 Unit tests ensure the functionality of individual components within the application. Follow these steps to execute the tests:
 
@@ -100,7 +119,7 @@ php artisan test --filter=TestFileName
 
 ---
 
-## **4. Additional Commands**
+## **5. Additional Commands**
 
 ### **Clear Cache**
 
