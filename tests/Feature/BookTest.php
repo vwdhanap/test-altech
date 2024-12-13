@@ -85,9 +85,9 @@ class BookTest extends TestCase
     }
 
     /**
-     * Test asc order get books unprocessable.
+     * Test order get books unprocessable.
      */
-    public function testAscOrderGetBooksUnprocessable(): void
+    public function testOrderGetBooksUnprocessable(): void
     {
         $author = Author::factory()->create();
         Book::factory()->count(50)->create(['author_id' => $author->id])->map(function ($book) {
