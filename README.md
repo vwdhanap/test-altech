@@ -50,7 +50,7 @@ Ensure you have the following installed:
 6. Run database migrations:
 
     ```bash
-    php artisan migrate
+    php artisan migrate --seed
     ```
 
     If you see the screen to create an SQLite database, then chose yes
